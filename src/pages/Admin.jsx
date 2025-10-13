@@ -6,7 +6,6 @@ const empty = {
   category: 'interior',
   price_mkd: 0,
   description: '',
-  badge: '',
   specs: {},
   images: [],
 };
@@ -355,19 +354,10 @@ export default function Admin() {
             <label>
               Price (MKD)
               <input
-                type="number"
                 value={form.price_mkd}
                 onChange={(e) =>
                   setForm({ ...form, price_mkd: Number(e.target.value) })
                 }
-                className="w-full border px-3 py-2 rounded"
-              />
-            </label>
-            <label className="col-span-2">
-              Badge (optional)
-              <input
-                value={form.badge || ''}
-                onChange={(e) => setForm({ ...form, badge: e.target.value })}
                 className="w-full border px-3 py-2 rounded"
               />
             </label>
@@ -422,7 +412,9 @@ export default function Admin() {
             </div>
 
             <div className="col-span-2 border rounded p-3">
-              <div className="font-semibold mb-2">Images (URLs)</div>
+              <div className="font-semibold mb-2">Images</div>
+
+              {/* URL Input */}
               <div className="flex gap-2 mb-2">
                 <input
                   placeholder="https://..."
@@ -431,7 +423,7 @@ export default function Admin() {
                   className="border px-2 py-1 rounded w-full"
                 />
                 <button
-                  className="px-3 py-1 border rounded"
+                  className="px-3 py-1 border rounded hover:bg-slate-50"
                   onClick={() => {
                     if (img) {
                       const imgs = [...(form.images || [])];
@@ -441,16 +433,48 @@ export default function Admin() {
                     }
                   }}
                 >
-                  Add
+                  Add URL
                 </button>
               </div>
+
+              {/* File Upload */}
+              <div className="flex gap-2 mb-2">
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={(e) => {
+                    const files = Array.from(e.target.files);
+                    files.forEach((file) => {
+                      const reader = new FileReader();
+                      reader.onloadend = () => {
+                        const imgs = [...(form.images || [])];
+                        imgs.push(reader.result);
+                        setForm({ ...form, images: imgs });
+                      };
+                      reader.readAsDataURL(file);
+                    });
+                    e.target.value = ''; // Reset input
+                  }}
+                  className="border px-2 py-1 rounded w-full"
+                />
+              </div>
+
               <div className="flex gap-2 flex-wrap">
                 {(form.images || []).map((u, i) => (
-                  <img
-                    key={i}
-                    src={u}
-                    className="h-16 w-20 object-cover rounded"
-                  />
+                  <div key={i} className="relative">
+                    <img src={u} className="h-16 w-20 object-cover rounded" />
+                    <button
+                      onClick={() => {
+                        const imgs = [...(form.images || [])];
+                        imgs.splice(i, 1);
+                        setForm({ ...form, images: imgs });
+                      }}
+                      className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 text-xs hover:bg-red-600"
+                    >
+                      ×
+                    </button>
+                  </div>
                 ))}
               </div>
             </div>
