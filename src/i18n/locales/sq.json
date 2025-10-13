@@ -1,0 +1,89 @@
+{
+  "admin": {
+    "login": {
+      "title": "Hyrja e Administratorit",
+      "password": "Fjalëkalimi",
+      "placeholder": "Vendosni fjalëkalimin e administratorit",
+      "button": "Hyr",
+      "loading": "Duke u hyrë...",
+      "error": {
+        "network": "Gabim në rrjet. Provoni përsëri.",
+        "invalid": "Fjalëkalim i pasaktë"
+      }
+    },
+    "panel": {
+      "title": "Paneli i Administratorit",
+      "logout": "Dil",
+      "products": "Produktet",
+      "create": "Krijo Produkt",
+      "edit": "Ndrysho Produkt"
+    },
+    "filters": {
+      "all": "Të gjitha",
+      "interior": "Të brendshme",
+      "exterior": "Të jashtme",
+      "windows": "Dritare",
+      "search": "Kërko…"
+    },
+    "table": {
+      "id": "ID",
+      "name": "Emri",
+      "category": "Kat",
+      "price": "Çmimi",
+      "actions": "Veprime",
+      "edit": "Ndrysho",
+      "delete": "Fshi"
+    },
+    "form": {
+      "id": "ID",
+      "name": "Emri",
+      "category": "Kategoria",
+      "price": "Çmimi (MKD)",
+      "description": "Përshkrimi",
+      "specs": "Specifikimet",
+      "images": "Imazhet",
+      "addUrl": "Shto URL",
+      "save": "Ruaj",
+      "clear": "Pastro",
+      "keyPlaceholder": "Çelësi",
+      "valuePlaceholder": "Vlera",
+      "add": "Shto",
+      "urlPlaceholder": "https://..."
+    },
+    "categories": {
+      "interior": "Të brendshme",
+      "exterior": "Të jashtme",
+      "windows": "Dritare"
+    }
+  },
+  "catalog": {
+    "categories": {
+      "interior": "DYERT E BRENDSHME",
+      "exterior": "DYERT E JASHTME",
+      "windows": "MOBILJET PVC",
+      "contact": "KONTAKTI"
+    },
+    "search": "Kërko produkt…",
+    "noProducts": "Nuk ka produkte.",
+    "contact": {
+      "title": "Na kontaktoni",
+      "phone": "Telefoni",
+      "email": "Email-i",
+      "address": "Adresa"
+    }
+  },
+  "product": {
+    "back": "Mbrapa",
+    "specifications": "Specifikimet",
+    "contact": "Kontakti për porosi",
+    "catalog": "Katalogu",
+    "currency": "den"
+  },
+  "footer": {
+    "copyright": "© {{year}} Variodor"
+  },
+  "language": {
+    "sq": "Shqip",
+    "mk": "Македонски"
+  }
+}

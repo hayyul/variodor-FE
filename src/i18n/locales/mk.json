@@ -1,0 +1,89 @@
+{
+  "admin": {
+    "login": {
+      "title": "Најава за Администратор",
+      "password": "Лозинка",
+      "placeholder": "Внесете лозинка за администратор",
+      "button": "Најави се",
+      "loading": "Најавување...",
+      "error": {
+        "network": "Грешка во мрежата. Обидете се повторно.",
+        "invalid": "Неточна лозинка"
+      }
+    },
+    "panel": {
+      "title": "Администраторска Панел",
+      "logout": "Одјави се",
+      "products": "Производи",
+      "create": "Креирај Производ",
+      "edit": "Измени Производ"
+    },
+    "filters": {
+      "all": "Сите",
+      "interior": "Внатрешни",
+      "exterior": "Надворешни",
+      "windows": "Прозорци",
+      "search": "Барај…"
+    },
+    "table": {
+      "id": "ИД",
+      "name": "Име",
+      "category": "Кат",
+      "price": "Цена",
+      "actions": "Акции",
+      "edit": "Измени",
+      "delete": "Избриши"
+    },
+    "form": {
+      "id": "ИД",
+      "name": "Име",
+      "category": "Категорија",
+      "price": "Цена (МКД)",
+      "description": "Опис",
+      "specs": "Спецификации",
+      "images": "Слики",
+      "addUrl": "Додај URL",
+      "save": "Зачувај",
+      "clear": "Исчисти",
+      "keyPlaceholder": "Клуч",
+      "valuePlaceholder": "Вредност",
+      "add": "Додај",
+      "urlPlaceholder": "https://..."
+    },
+    "categories": {
+      "interior": "Внатрешни",
+      "exterior": "Надворешни",
+      "windows": "Прозорци"
+    }
+  },
+  "catalog": {
+    "categories": {
+      "interior": "ВНАТРЕШНИ ВРАТИ",
+      "exterior": "НАДВОРЕШНИ ВРАТИ",
+      "windows": "ПВЦ СТОЛАРИЈА",
+      "contact": "КОНТАКТ"
+    },
+    "search": "Пребарај производ…",
+    "noProducts": "Нема производи.",
+    "contact": {
+      "title": "Контактирајте не",
+      "phone": "Телефон",
+      "email": "Е-пошта",
+      "address": "Адреса"
+    }
+  },
+  "product": {
+    "back": "Назад",
+    "specifications": "Спецификации",
+    "contact": "Контакт за нарачка",
+    "catalog": "Каталог",
+    "currency": "ден"
+  },
+  "footer": {
+    "copyright": "© {{year}} Variodor"
+  },
+  "language": {
+    "sq": "Shqip",
+    "mk": "Македонски"
+  }
+}
