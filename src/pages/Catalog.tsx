@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   MdSearch,
   MdPhone,
@@ -16,26 +17,27 @@ const mkd = (n: number) =>
     maximumFractionDigits: 2,
   }).format(n);
 
-const CATS = [
+const getCats = (t: any) => [
   {
     key: 'interior',
-    label: 'ВНАТРЕШНИ ВРАТИ',
+    label: t('catalog.categories.interior'),
     icon: 'fa-solid fa-door-closed',
   },
-  { key: 'exterior', label: 'НАДВОРЕШНИ ВРАТИ', icon: 'fas fa-door-open' },
+  { key: 'exterior', label: t('catalog.categories.exterior'), icon: 'fas fa-door-open' },
   {
     key: 'windows',
-    label: 'ПВЦ СТОЛАРИЈА',
+    label: t('catalog.categories.windows'),
     icon: '/logos/window.png',
   },
   {
     key: 'contact',
-    label: 'КОНТАКТ',
+    label: t('catalog.categories.contact'),
     icon: MdContactMail,
   },
 ];
 
 export default function Catalog() {
+  const { t } = useTranslation();
   const products = useStore((state) => state.products);
   const q = useStore((state) => state.q);
   const setProducts = useStore((state) => state.setProducts);
@@ -43,6 +45,7 @@ export default function Catalog() {
 
   const [params, setParams] = useSearchParams();
   const cat = params.get('cat') || 'interior';
+  const CATS = getCats(t);
 
   const load = () =>
     fetch(`/api/products?category=${cat}`)
@@ -103,7 +106,7 @@ export default function Catalog() {
         /* Contact Section */
         <div className="bg-white rounded-2xl border shadow-sm p-8">
           <h2 className="text-2xl font-bold text-slate-900 mb-6 text-center">
-            Контактирајте не
+            {t('catalog.contact.title')}
           </h2>
           <div className="grid md:grid-cols-3 gap-6">
             <div className="flex items-start gap-4">
@@ -111,7 +114,7 @@ export default function Catalog() {
                 <MdPhone className="text-2xl text-red-600" />
               </div>
               <div>
-                <h3 className="font-semibold text-slate-900 mb-1">Телефон</h3>
+                <h3 className="font-semibold text-slate-900 mb-1">{t('catalog.contact.phone')}</h3>
                 <a
                   href="tel:+38970123456"
                   className="text-slate-600 hover:text-red-600 transition"
@@ -126,7 +129,7 @@ export default function Catalog() {
                 <MdEmail className="text-2xl text-red-600" />
               </div>
               <div>
-                <h3 className="font-semibold text-slate-900 mb-1">Е-пошта</h3>
+                <h3 className="font-semibold text-slate-900 mb-1">{t('catalog.contact.email')}</h3>
                 <a
                   href="mailto:info@variodor.mk"
                   className="text-slate-600 hover:text-red-600 transition"
@@ -141,7 +144,7 @@ export default function Catalog() {
                 <MdLocationOn className="text-2xl text-red-600" />
               </div>
               <div>
-                <h3 className="font-semibold text-slate-900 mb-1">Адреса</h3>
+                <h3 className="font-semibold text-slate-900 mb-1">{t('catalog.contact.address')}</h3>
                 <a
                   href="https://maps.google.com/?q=18-ti+Noemvri+Gostivar+1230"
                   target="_blank"
@@ -162,14 +165,14 @@ export default function Catalog() {
               <input
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
-                placeholder="Пребарај производ…"
+                placeholder={t('catalog.search')}
                 className="w-full pl-10 pr-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
               />
             </div>
           </div>
 
           {filtered.length === 0 ? (
-            <div className="text-slate-600">Нема производи.</div>
+            <div className="text-slate-600">{t('catalog.noProducts')}</div>
           ) : (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {filtered.map((p) => (
@@ -190,7 +193,7 @@ export default function Catalog() {
                       {p.name}
                     </h3>
                     <div className="mt-2 text-slate-700 font-semibold">
-                      {mkd(p.price_mkd)} ден
+                      {mkd(p.price_mkd)} {t('product.currency')}
                     </div>
                   </div>
                 </Link>

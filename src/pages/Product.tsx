@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useStore } from '../store';
 
 const mkd = (n: number) =>
@@ -10,6 +11,7 @@ const mkd = (n: number) =>
   }).format(n);
 
 export default function Product() {
+  const { t } = useTranslation();
   const { id } = useParams();
   const nav = useNavigate();
   const currentProduct = useStore((state) => state.currentProduct);
@@ -27,7 +29,7 @@ export default function Product() {
     <div>
       <div className="flex items-center justify-between mb-5">
         <button onClick={() => nav(-1)} className="px-3 py-2 border rounded">
-          ← Назад
+          ← {t('product.back')}
         </button>
       </div>
 
@@ -43,7 +45,7 @@ export default function Product() {
             {currentProduct.name}
           </h1>
           <div className="text-2xl font-bold mt-2">
-            {mkd(currentProduct.price_mkd)} ден
+            {mkd(currentProduct.price_mkd)} {t('product.currency')}
           </div>
 
           {currentProduct.description && (
@@ -55,7 +57,7 @@ export default function Product() {
           {Object.keys(currentProduct.specs || {}).length > 0 && (
             <>
               <div className="h-px bg-slate-200 my-6"></div>
-              <h3 className="font-semibold text-lg mb-3">Спецификации</h3>
+              <h3 className="font-semibold text-lg mb-3">{t('product.specifications')}</h3>
               <ul className="space-y-3">
                 {Object.entries(currentProduct.specs || {}).map(([k, v]) => (
                   <li key={k} className="flex gap-2">
@@ -71,16 +73,16 @@ export default function Product() {
 
           <div className="flex gap-3">
             <a
-              href={`https://wa.me/3890000000?text=Интерес за: ${encodeURIComponent(
-                currentProduct.name
+              href={`https://wa.me/3890000000?text=${encodeURIComponent(
+                t('product.contact') + ': ' + currentProduct.name
               )}`}
               target="_blank"
               className="px-4 py-2 rounded bg-green-600 text-white"
             >
-              Контакт за нарачка
+              {t('product.contact')}
             </a>
             <a href="/" className="px-4 py-2 rounded border">
-              Каталог
+              {t('product.catalog')}
             </a>
           </div>
         </div>

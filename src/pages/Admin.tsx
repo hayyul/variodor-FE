@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useStore } from '../store';
 
 interface LoginScreenProps {
@@ -6,6 +7,7 @@ interface LoginScreenProps {
 }
 
 function LoginScreen({ onLogin }: LoginScreenProps) {
+  const { t } = useTranslation();
   const [password, setPassword] = React.useState('');
   const [error, setError] = React.useState('');
   const [loading, setLoading] = React.useState(false);
@@ -33,10 +35,10 @@ function LoginScreen({ onLogin }: LoginScreenProps) {
         setError('');
       } else {
         console.log('Login failed:', data.message);
-        setError(data.message || 'Login failed');
+        setError(data.message || t('admin.login.error.invalid'));
       }
     } catch (err) {
-      setError('Network error. Please try again.');
+      setError(t('admin.login.error.network'));
     } finally {
       setLoading(false);
     }
@@ -45,18 +47,18 @@ function LoginScreen({ onLogin }: LoginScreenProps) {
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center mb-6">Admin Login</h2>
+        <h2 className="text-2xl font-bold text-center mb-6">{t('admin.login.title')}</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-sm font-medium text-slate-700 mb-2">
-              Password
+              {t('admin.login.password')}
             </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-500"
-              placeholder="Enter admin password"
+              placeholder={t('admin.login.placeholder')}
               required
             />
             {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
@@ -66,7 +68,7 @@ function LoginScreen({ onLogin }: LoginScreenProps) {
             disabled={loading}
             className="w-full bg-slate-900 text-white py-2 px-4 rounded-md hover:bg-slate-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? t('admin.login.loading') : t('admin.login.button')}
           </button>
         </form>
       </div>
@@ -75,6 +77,7 @@ function LoginScreen({ onLogin }: LoginScreenProps) {
 }
 
 export default function Admin() {
+  const { t } = useTranslation();
   const isAuthenticated = useStore((state) => state.isAuthenticated);
   const token = useStore((state) => state.token);
   const items = useStore((state) => state.items);
@@ -255,32 +258,32 @@ export default function Admin() {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Admin Panel</h1>
+        <h1 className="text-2xl font-bold">{t('admin.panel.title')}</h1>
         <button
           onClick={handleLogout}
           className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
         >
-          Logout
+          {t('admin.panel.logout')}
         </button>
       </div>
       <div className="grid md:grid-cols-2 gap-8">
         <section>
-          <h2 className="text-xl font-bold mb-3">Products</h2>
+          <h2 className="text-xl font-bold mb-3">{t('admin.panel.products')}</h2>
           <div className="flex gap-2 mb-3">
             <select
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
               className="border px-3 py-2 rounded"
             >
-              <option value="all">All</option>
-              <option value="interior">Interior</option>
-              <option value="exterior">Exterior</option>
-              <option value="windows">Windows</option>
+              <option value="all">{t('admin.filters.all')}</option>
+              <option value="interior">{t('admin.categories.interior')}</option>
+              <option value="exterior">{t('admin.categories.exterior')}</option>
+              <option value="windows">{t('admin.categories.windows')}</option>
             </select>
             <input
               value={q}
               onChange={(e) => setQ(e.target.value)}
-              placeholder="Search…"
+              placeholder={t('admin.filters.search')}
               className="border px-3 py-2 rounded ml-auto"
             />
           </div>
@@ -288,11 +291,11 @@ export default function Admin() {
             <table className="w-full text-sm">
               <thead className="bg-slate-100">
                 <tr>
-                  <th className="text-left p-2">ID</th>
-                  <th className="text-left p-2">Name</th>
-                  <th className="p-2">Cat</th>
-                  <th className="p-2">Price</th>
-                  <th className="p-2">Actions</th>
+                  <th className="text-left p-2">{t('admin.table.id')}</th>
+                  <th className="text-left p-2">{t('admin.table.name')}</th>
+                  <th className="p-2">{t('admin.table.category')}</th>
+                  <th className="p-2">{t('admin.table.price')}</th>
+                  <th className="p-2">{t('admin.table.actions')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -307,13 +310,13 @@ export default function Admin() {
                         className="px-2 py-1 border rounded mr-2"
                         onClick={() => edit(p)}
                       >
-                        Edit
+                        {t('admin.table.edit')}
                       </button>
                       <button
                         className="px-2 py-1 border rounded"
                         onClick={() => del(p.id)}
                       >
-                        Delete
+                        {t('admin.table.delete')}
                       </button>
                     </td>
                   </tr>
@@ -325,11 +328,11 @@ export default function Admin() {
 
         <section>
           <h2 className="text-xl font-bold mb-3">
-            {form.id ? 'Edit' : 'Create'} Product
+            {form.id ? t('admin.panel.edit') : t('admin.panel.create')} {t('admin.panel.products')}
           </h2>
           <div className="grid grid-cols-2 gap-3 bg-white p-4 rounded border">
             <label className="col-span-2">
-              ID
+              {t('admin.form.id')}
               <input
                 value={form.id}
                 onChange={(e) => setForm({ ...form, id: e.target.value })}
@@ -337,7 +340,7 @@ export default function Admin() {
               />
             </label>
             <label className="col-span-2">
-              Name
+              {t('admin.form.name')}
               <input
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -345,19 +348,19 @@ export default function Admin() {
               />
             </label>
             <label>
-              Category
+              {t('admin.form.category')}
               <select
                 value={form.category}
                 onChange={(e) => setForm({ ...form, category: e.target.value })}
                 className="w-full border px-3 py-2 rounded"
               >
-                <option value="interior">Interior</option>
-                <option value="exterior">Exterior</option>
-                <option value="windows">Windows</option>
+                <option value="interior">{t('admin.categories.interior')}</option>
+                <option value="exterior">{t('admin.categories.exterior')}</option>
+                <option value="windows">{t('admin.categories.windows')}</option>
               </select>
             </label>
             <label>
-              Price (MKD)
+              {t('admin.form.price')}
               <input
                 value={form.price_mkd}
                 onChange={(e) =>
@@ -367,7 +370,7 @@ export default function Admin() {
               />
             </label>
             <label className="col-span-2">
-              Description
+              {t('admin.form.description')}
               <textarea
                 value={form.description}
                 onChange={(e) =>
@@ -378,16 +381,16 @@ export default function Admin() {
             </label>
 
             <div className="col-span-2 border rounded p-3">
-              <div className="font-semibold mb-2">Specs</div>
+              <div className="font-semibold mb-2">{t('admin.form.specs')}</div>
               <div className="flex gap-2 mb-2">
                 <input
-                  placeholder="Key"
+                  placeholder={t('admin.form.keyPlaceholder')}
                   value={specKey}
                   onChange={(e) => setSpecKey(e.target.value)}
                   className="border px-2 py-1 rounded"
                 />
                 <input
-                  placeholder="Value"
+                  placeholder={t('admin.form.valuePlaceholder')}
                   value={specVal}
                   onChange={(e) => setSpecVal(e.target.value)}
                   className="border px-2 py-1 rounded"
@@ -404,7 +407,7 @@ export default function Admin() {
                     }
                   }}
                 >
-                  Add
+                  {t('admin.form.add')}
                 </button>
               </div>
               <div className="grid grid-cols-2 gap-2">
@@ -417,12 +420,12 @@ export default function Admin() {
             </div>
 
             <div className="col-span-2 border rounded p-3">
-              <div className="font-semibold mb-2">Images</div>
+              <div className="font-semibold mb-2">{t('admin.form.images')}</div>
 
               {/* URL Input */}
               <div className="flex gap-2 mb-2">
                 <input
-                  placeholder="https://..."
+                  placeholder={t('admin.form.urlPlaceholder')}
                   value={img}
                   onChange={(e) => setImg(e.target.value)}
                   className="border px-2 py-1 rounded w-full"
@@ -438,7 +441,7 @@ export default function Admin() {
                     }
                   }}
                 >
-                  Add URL
+                  {t('admin.form.addUrl')}
                 </button>
               </div>
 
@@ -489,13 +492,13 @@ export default function Admin() {
                 className="px-4 py-2 rounded bg-slate-900 text-white"
                 onClick={save}
               >
-                Save
+                {t('admin.form.save')}
               </button>
               <button
                 className="px-4 py-2 rounded border"
                 onClick={() => resetForm()}
               >
-                Clear
+                {t('admin.form.clear')}
               </button>
             </div>
           </div>
