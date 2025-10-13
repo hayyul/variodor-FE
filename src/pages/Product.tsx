@@ -1,7 +1,8 @@
-import React from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useStore } from '../store';
 
-const mkd = (n) =>
+const mkd = (n: number) =>
   new Intl.NumberFormat('mk-MK', {
     style: 'currency',
     currency: 'MKD',
@@ -11,13 +12,17 @@ const mkd = (n) =>
 export default function Product() {
   const { id } = useParams();
   const nav = useNavigate();
-  const [p, setP] = React.useState(null);
-  React.useEffect(() => {
+  const currentProduct = useStore((state) => state.currentProduct);
+  const setCurrentProduct = useStore((state) => state.setCurrentProduct);
+
+  useEffect(() => {
     fetch('/api/products/' + id)
       .then((r) => r.json())
-      .then(setP);
-  }, [id]);
-  if (!p) return <div>...</div>;
+      .then(setCurrentProduct);
+  }, [id, setCurrentProduct]);
+
+  if (!currentProduct) return <div>...</div>;
+
   return (
     <div>
       <div className="flex items-center justify-between mb-5">
@@ -28,27 +33,31 @@ export default function Product() {
 
       <div className="grid md:grid-cols-2 gap-8 items-start bg-white rounded-3xl p-6 border">
         <img
-          src={p.images[0]}
-          alt={p.name}
+          src={currentProduct.images[0]}
+          alt={currentProduct.name}
           className="w-full h-[520px] object-contain bg-slate-50 rounded-2xl"
         />
 
         <div>
-          <h1 className="text-3xl font-extrabold text-slate-900">{p.name}</h1>
-          <div className="text-2xl font-bold mt-2">{mkd(p.price_mkd)} ден</div>
+          <h1 className="text-3xl font-extrabold text-slate-900">
+            {currentProduct.name}
+          </h1>
+          <div className="text-2xl font-bold mt-2">
+            {mkd(currentProduct.price_mkd)} ден
+          </div>
 
-          {p.description && (
+          {currentProduct.description && (
             <p className="mt-4 text-slate-700 leading-relaxed">
-              {p.description}
+              {currentProduct.description}
             </p>
           )}
 
-          {Object.keys(p.specs || {}).length > 0 && (
+          {Object.keys(currentProduct.specs || {}).length > 0 && (
             <>
               <div className="h-px bg-slate-200 my-6"></div>
               <h3 className="font-semibold text-lg mb-3">Спецификации</h3>
               <ul className="space-y-3">
-                {Object.entries(p.specs || {}).map(([k, v]) => (
+                {Object.entries(currentProduct.specs || {}).map(([k, v]) => (
                   <li key={k} className="flex gap-2">
                     <span className="font-semibold">{k}:</span>
                     <span className="text-slate-700">{v}</span>
@@ -63,7 +72,7 @@ export default function Product() {
           <div className="flex gap-3">
             <a
               href={`https://wa.me/3890000000?text=Интерес за: ${encodeURIComponent(
-                p.name
+                currentProduct.name
               )}`}
               target="_blank"
               className="px-4 py-2 rounded bg-green-600 text-white"

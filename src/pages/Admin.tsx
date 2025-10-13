@@ -1,24 +1,16 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
+import { useStore } from '../store';
 
-const empty = {
-  id: '',
-  name: '',
-  category: 'interior',
-  price_mkd: 0,
-  description: '',
-  specs: {},
-  images: [],
-};
+interface LoginScreenProps {
+  onLogin: (token: string) => void;
+}
 
-// Authentication state
-const ADMIN_PASSWORD = 'admin123'; // This will be sent to backend
+function LoginScreen({ onLogin }: LoginScreenProps) {
+  const [password, setPassword] = React.useState('');
+  const [error, setError] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
 
-function LoginScreen({ onLogin }) {
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
@@ -83,21 +75,31 @@ function LoginScreen({ onLogin }) {
 }
 
 export default function Admin() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [token, setToken] = useState(null);
-  const [items, setItems] = useState([]);
-  const [form, setForm] = useState(empty);
-  const [specKey, setSpecKey] = useState('');
-  const [specVal, setSpecVal] = useState('');
-  const [img, setImg] = useState('');
-  const [filter, setFilter] = useState('all');
-  const [q, setQ] = useState('');
+  const isAuthenticated = useStore((state) => state.isAuthenticated);
+  const token = useStore((state) => state.token);
+  const items = useStore((state) => state.items);
+  const form = useStore((state) => state.form);
+  const specKey = useStore((state) => state.specKey);
+  const specVal = useStore((state) => state.specVal);
+  const img = useStore((state) => state.img);
+  const filter = useStore((state) => state.filter);
+  const q = useStore((state) => state.q);
+
+  const setIsAuthenticated = useStore((state) => state.setIsAuthenticated);
+  const setToken = useStore((state) => state.setToken);
+  const setItems = useStore((state) => state.setItems);
+  const setForm = useStore((state) => state.setForm);
+  const setSpecKey = useStore((state) => state.setSpecKey);
+  const setSpecVal = useStore((state) => state.setSpecVal);
+  const setImg = useStore((state) => state.setImg);
+  const setFilter = useStore((state) => state.setFilter);
+  const setQ = useStore((state) => state.setQ);
+  const resetForm = useStore((state) => state.resetForm);
 
   // Helper function to make authenticated API calls
-  const apiCall = async (url, options = {}) => {
-    const headers = {
+  const apiCall = async (url: string, options: RequestInit = {}) => {
+    const headers: Record<string, string> = {
       'Content-Type': 'application/json',
-      ...options.headers,
     };
 
     if (token) {
@@ -106,7 +108,10 @@ export default function Admin() {
 
     return fetch(url, {
       ...options,
-      headers,
+      headers: {
+        ...headers,
+        ...(options.headers as Record<string, string>),
+      },
     });
   };
 
@@ -163,7 +168,7 @@ export default function Admin() {
     checkAuth();
   }, []); // Empty dependency array is correct here
 
-  const handleLogin = (newToken) => {
+  const handleLogin = (newToken: string) => {
     console.log('handleLogin called with token:', newToken);
     setToken(newToken);
     setIsAuthenticated(true);
@@ -194,7 +199,7 @@ export default function Admin() {
       });
 
       if (response.ok) {
-        setForm(empty);
+        resetForm();
         load();
       } else if (response.status === 401) {
         handleLogout();
@@ -207,9 +212,9 @@ export default function Admin() {
     }
   };
 
-  const edit = (p) => setForm(JSON.parse(JSON.stringify(p)));
+  const edit = (p: typeof form) => setForm(JSON.parse(JSON.stringify(p)));
 
-  const del = async (id) => {
+  const del = async (id: string) => {
     if (confirm('Delete?')) {
       try {
         const response = await apiCall(`/api/products/${id}`, {
@@ -444,12 +449,12 @@ export default function Admin() {
                   accept="image/*"
                   multiple
                   onChange={(e) => {
-                    const files = Array.from(e.target.files);
+                    const files = Array.from(e.target.files || []);
                     files.forEach((file) => {
                       const reader = new FileReader();
                       reader.onloadend = () => {
                         const imgs = [...(form.images || [])];
-                        imgs.push(reader.result);
+                        imgs.push(reader.result as string);
                         setForm({ ...form, images: imgs });
                       };
                       reader.readAsDataURL(file);
@@ -488,7 +493,7 @@ export default function Admin() {
               </button>
               <button
                 className="px-4 py-2 rounded border"
-                onClick={() => setForm(empty)}
+                onClick={() => resetForm()}
               >
                 Clear
               </button>

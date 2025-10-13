@@ -1,4 +1,4 @@
-import { describe, test, it } from 'vitest';
+import { describe, it } from 'vitest';
 
 describe('[INIT] 0. Dependencies Installation', () => {
   describe('[IN] 1. Required Dependencies', () => {

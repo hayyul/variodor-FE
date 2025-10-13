@@ -1,4 +1,4 @@
-import { describe, test, it } from 'vitest';
+import { describe, test } from 'vitest';
 import * as tests from './tests';
 
 describe('[INIT] 0. Component Translation', () => {

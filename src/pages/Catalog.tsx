@@ -1,17 +1,15 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import {
-  MdDoorFront,
-  MdHome,
-  MdWindow,
   MdSearch,
   MdPhone,
   MdEmail,
   MdLocationOn,
   MdContactMail,
 } from 'react-icons/md';
+import { useStore } from '../store';
 
-const mkd = (n) =>
+const mkd = (n: number) =>
   new Intl.NumberFormat('mk-MK', {
     style: 'currency',
     currency: 'MKD',
@@ -38,15 +36,19 @@ const CATS = [
 ];
 
 export default function Catalog() {
-  const [products, setProducts] = useState([]);
+  const products = useStore((state) => state.products);
+  const q = useStore((state) => state.q);
+  const setProducts = useStore((state) => state.setProducts);
+  const setQ = useStore((state) => state.setQ);
+
   const [params, setParams] = useSearchParams();
   const cat = params.get('cat') || 'interior';
-  const [q, setQ] = useState('');
 
   const load = () =>
     fetch(`/api/products?category=${cat}`)
       .then((r) => r.json())
       .then(setProducts);
+
   React.useEffect(() => {
     if (cat !== 'contact') {
       load();

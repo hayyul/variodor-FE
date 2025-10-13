@@ -24,6 +24,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
+    "@types/node": "^24.7.2",
     "@types/react": "^18.2.46",
     "@types/react-dom": "^18.2.18",
     "@vitejs/plugin-react": "^5.0.2",
@@ -32,6 +33,7 @@
     "happy-dom": "^20.0.0",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.10",
+    "typescript": "^5.9.3",
     "vite": "^5.3.3",
     "vitest": "^3.2.4"
   }

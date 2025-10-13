@@ -3,9 +3,9 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
 import './index.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import Catalog from './pages/Catalog.jsx';
-import Product from './pages/Product.jsx';
-import Admin from './pages/Admin.jsx';
+import Catalog from './pages/Catalog.tsx';
+import Product from './pages/Product.tsx';
+import Admin from './pages/Admin.tsx';
 
 function Layout() {
   return (
