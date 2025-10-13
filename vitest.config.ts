@@ -8,11 +8,15 @@ export default defineConfig({
     globals: true,
     environment: 'happy-dom',
     setupFiles: ['./__tests__/setup.ts'],
-    include: ['__tests__/**/*.{test,spec}.{ts,tsx}'],
+    include: ['__tests__/**/*.{test,spec,tests}.{ts,tsx}'],
   },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
+  },
+  esbuild: {
+    loader: 'tsx',
+    include: /.*\.tsx?$/,
   },
 });
