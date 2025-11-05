@@ -77,7 +77,8 @@
     "specifications": "Спецификации",
     "contact": "Контакт за нарачка",
     "catalog": "Каталог",
-    "currency": "ден"
+    "currency": "ден",
+    "priceOnRequest": "Цена по барање"
   },
   "footer": {
     "copyright": "© {{year}} Variodor"

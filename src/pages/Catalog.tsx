@@ -194,7 +194,7 @@ export default function Catalog() {
                       {p.name}
                     </h3>
                     <div className="mt-2 text-slate-700 font-semibold">
-                      {mkd(p.price_mkd)} {t('product.currency')}
+                      {p.price_mkd === 0 ? t('product.priceOnRequest') : `${mkd(p.price_mkd)} ${t('product.currency')}`}
                     </div>
                   </div>
                 </Link>

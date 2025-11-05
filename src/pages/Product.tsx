@@ -46,7 +46,7 @@ export default function Product() {
             {currentProduct.name}
           </h1>
           <div className="text-2xl font-bold mt-2">
-            {mkd(currentProduct.price_mkd)} {t('product.currency')}
+            {currentProduct.price_mkd === 0 ? t('product.priceOnRequest') : `${mkd(currentProduct.price_mkd)} ${t('product.currency')}`}
           </div>
 
           {currentProduct.description && (

@@ -77,7 +77,8 @@
     "specifications": "Specifikimet",
     "contact": "Kontakti për porosi",
     "catalog": "Katalogu",
-    "currency": "den"
+    "currency": "den",
+    "priceOnRequest": "Çmimi sipas kërkesës"
   },
   "footer": {
     "copyright": "© {{year}} Variodor"
