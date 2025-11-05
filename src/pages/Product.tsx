@@ -46,7 +46,9 @@ export default function Product() {
             {currentProduct.name}
           </h1>
           <div className="text-2xl font-bold mt-2">
-            {currentProduct.price_mkd === 0 ? t('product.priceOnRequest') : `${mkd(currentProduct.price_mkd)} ${t('product.currency')}`}
+            {currentProduct.price_mkd === 0
+              ? t('product.priceOnRequest')
+              : `${mkd(currentProduct.price_mkd)} ${t('product.currency')}`}
           </div>
 
           {currentProduct.description && (
@@ -58,7 +60,9 @@ export default function Product() {
           {Object.keys(currentProduct.specs || {}).length > 0 && (
             <>
               <div className="h-px bg-slate-200 my-6"></div>
-              <h3 className="font-semibold text-lg mb-3">{t('product.specifications')}</h3>
+              <h3 className="font-semibold text-lg mb-3">
+                {t('product.specifications')}
+              </h3>
               <ul className="space-y-3">
                 {Object.entries(currentProduct.specs || {}).map(([k, v]) => (
                   <li key={k} className="flex gap-2">

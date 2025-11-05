@@ -1,11 +1,13 @@
 /**
  * API Configuration
  *
- * In development: Uses Vite proxy to localhost:4000
- * In production: Uses VITE_API_URL environment variable
+ * Both development and production use the production backend
+ * Default: https://variodor-be.onrender.com
+ * Override via VITE_API_URL environment variable
  */
 
-const API_URL = import.meta.env.VITE_API_URL || '';
+const API_URL =
+  import.meta.env.VITE_API_URL || 'https://variodor-be.onrender.com';
 
 /**
  * Get the full API endpoint URL
@@ -13,12 +15,6 @@ const API_URL = import.meta.env.VITE_API_URL || '';
  * @returns Full URL for the API endpoint
  */
 export function getApiUrl(path: string): string {
-  // In development, use relative path (Vite proxy handles it)
-  if (import.meta.env.DEV) {
-    return path;
-  }
-
-  // In production, use the configured API URL
   return `${API_URL}${path}`;
 }
 

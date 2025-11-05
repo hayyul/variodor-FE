@@ -24,7 +24,11 @@ const getCats = (t: any) => [
     label: t('catalog.categories.interior'),
     icon: 'fa-solid fa-door-closed',
   },
-  { key: 'exterior', label: t('catalog.categories.exterior'), icon: 'fas fa-door-open' },
+  {
+    key: 'exterior',
+    label: t('catalog.categories.exterior'),
+    icon: 'fas fa-door-open',
+  },
   {
     key: 'windows',
     label: t('catalog.categories.windows'),
@@ -115,12 +119,14 @@ export default function Catalog() {
                 <MdPhone className="text-2xl text-red-600" />
               </div>
               <div>
-                <h3 className="font-semibold text-slate-900 mb-1">{t('catalog.contact.phone')}</h3>
+                <h3 className="font-semibold text-slate-900 mb-1">
+                  {t('catalog.contact.phone')}
+                </h3>
                 <a
-                  href="tel:+38970123456"
+                  href="tel:+38978346253"
                   className="text-slate-600 hover:text-red-600 transition"
                 >
-                  +389 70 123 456
+                  +389 78 346 253
                 </a>
               </div>
             </div>
@@ -130,12 +136,14 @@ export default function Catalog() {
                 <MdEmail className="text-2xl text-red-600" />
               </div>
               <div>
-                <h3 className="font-semibold text-slate-900 mb-1">{t('catalog.contact.email')}</h3>
+                <h3 className="font-semibold text-slate-900 mb-1">
+                  {t('catalog.contact.email')}
+                </h3>
                 <a
-                  href="mailto:info@variodor.mk"
+                  href="mailto:demirel1972@yahoo.com"
                   className="text-slate-600 hover:text-red-600 transition"
                 >
-                  info@variodor.mk
+                  demirel1972@yahoo.com
                 </a>
               </div>
             </div>
@@ -145,7 +153,9 @@ export default function Catalog() {
                 <MdLocationOn className="text-2xl text-red-600" />
               </div>
               <div>
-                <h3 className="font-semibold text-slate-900 mb-1">{t('catalog.contact.address')}</h3>
+                <h3 className="font-semibold text-slate-900 mb-1">
+                  {t('catalog.contact.address')}
+                </h3>
                 <a
                   href="https://maps.google.com/?q=18-ti+Noemvri+Gostivar+1230"
                   target="_blank"
@@ -194,7 +204,9 @@ export default function Catalog() {
                       {p.name}
                     </h3>
                     <div className="mt-2 text-slate-700 font-semibold">
-                      {p.price_mkd === 0 ? t('product.priceOnRequest') : `${mkd(p.price_mkd)} ${t('product.currency')}`}
+                      {p.price_mkd === 0
+                        ? t('product.priceOnRequest')
+                        : `${mkd(p.price_mkd)} ${t('product.currency')}`}
                     </div>
                   </div>
                 </Link>
