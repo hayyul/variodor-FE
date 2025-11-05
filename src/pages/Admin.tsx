@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useStore } from '../store';
+import { getApiUrl } from '../config/api';
 
 interface LoginScreenProps {
   onLogin: (token: string) => void;
@@ -18,7 +19,7 @@ function LoginScreen({ onLogin }: LoginScreenProps) {
     setError('');
 
     try {
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch(getApiUrl('/api/auth/login'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -109,7 +110,7 @@ export default function Admin() {
       headers.Authorization = `Bearer ${token}`;
     }
 
-    return fetch(url, {
+    return fetch(getApiUrl(url), {
       ...options,
       headers: {
         ...headers,
@@ -145,7 +146,7 @@ export default function Admin() {
       const storedToken = localStorage.getItem('adminToken');
       if (storedToken) {
         try {
-          const response = await fetch('/api/auth/verify', {
+          const response = await fetch(getApiUrl('/api/auth/verify'), {
             headers: {
               Authorization: `Bearer ${storedToken}`,
             },

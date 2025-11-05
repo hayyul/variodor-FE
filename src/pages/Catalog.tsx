@@ -9,6 +9,7 @@ import {
   MdContactMail,
 } from 'react-icons/md';
 import { useStore } from '../store';
+import { getApiUrl } from '../config/api';
 
 const mkd = (n: number) =>
   new Intl.NumberFormat('mk-MK', {
@@ -48,7 +49,7 @@ export default function Catalog() {
   const CATS = getCats(t);
 
   const load = () =>
-    fetch(`/api/products?category=${cat}`)
+    fetch(getApiUrl(`/api/products?category=${cat}`))
       .then((r) => r.json())
       .then(setProducts);
 

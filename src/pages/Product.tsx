@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useStore } from '../store';
+import { getApiUrl } from '../config/api';
 
 const mkd = (n: number) =>
   new Intl.NumberFormat('mk-MK', {
@@ -18,7 +19,7 @@ export default function Product() {
   const setCurrentProduct = useStore((state) => state.setCurrentProduct);
 
   useEffect(() => {
-    fetch('/api/products/' + id)
+    fetch(getApiUrl('/api/products/' + id))
       .then((r) => r.json())
       .then(setCurrentProduct);
   }, [id, setCurrentProduct]);
