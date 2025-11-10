@@ -48,7 +48,9 @@ function LoginScreen({ onLogin }: LoginScreenProps) {
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center mb-6">{t('admin.login.title')}</h2>
+        <h2 className="text-2xl font-bold text-center mb-6">
+          {t('admin.login.title')}
+        </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-sm font-medium text-slate-700 mb-2">
@@ -269,7 +271,9 @@ export default function Admin() {
       </div>
       <div className="grid md:grid-cols-2 gap-8">
         <section>
-          <h2 className="text-xl font-bold mb-3">{t('admin.panel.products')}</h2>
+          <h2 className="text-xl font-bold mb-3">
+            {t('admin.panel.products')}
+          </h2>
           <div className="flex gap-2 mb-3">
             <select
               value={filter}
@@ -281,12 +285,6 @@ export default function Admin() {
               <option value="exterior">{t('admin.categories.exterior')}</option>
               <option value="windows">{t('admin.categories.windows')}</option>
             </select>
-            <input
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder={t('admin.filters.search')}
-              className="border px-3 py-2 rounded ml-auto"
-            />
           </div>
           <div className="overflow-auto border rounded">
             <table className="w-full text-sm">
@@ -329,7 +327,8 @@ export default function Admin() {
 
         <section>
           <h2 className="text-xl font-bold mb-3">
-            {form.id ? t('admin.panel.edit') : t('admin.panel.create')} {t('admin.panel.products')}
+            {form.id ? t('admin.panel.edit') : t('admin.panel.create')}{' '}
+            {t('admin.panel.products')}
           </h2>
           <div className="grid grid-cols-2 gap-3 bg-white p-4 rounded border">
             <label className="col-span-2">
@@ -355,8 +354,12 @@ export default function Admin() {
                 onChange={(e) => setForm({ ...form, category: e.target.value })}
                 className="w-full border px-3 py-2 rounded"
               >
-                <option value="interior">{t('admin.categories.interior')}</option>
-                <option value="exterior">{t('admin.categories.exterior')}</option>
+                <option value="interior">
+                  {t('admin.categories.interior')}
+                </option>
+                <option value="exterior">
+                  {t('admin.categories.exterior')}
+                </option>
                 <option value="windows">{t('admin.categories.windows')}</option>
               </select>
             </label>

@@ -86,5 +86,31 @@
   "language": {
     "sq": "Shqip",
     "mk": "Македонски"
+  },
+  "home": {
+    "hero": {
+      "title": "Elevate Your Home With Variodor",
+      "button": "Explore Catalog"
+    },
+    "products": {
+      "title": "Our Product Models",
+      "interiorDesc": "Premium interior doors with modern design and perfect finish for your home",
+      "exteriorDesc": "Durable exterior doors with top security and energy efficiency",
+      "windowsDesc": "High-quality PVC windows with excellent insulation and modern look"
+    },
+    "features": {
+      "title": "Key Features",
+      "moneyback": "45-Day Money-Back Guarantee",
+      "moneybackDesc": "We stand behind our quality",
+      "installation": "Installation Included",
+      "installationDesc": "Professional installation by our team",
+      "scratchResistant": "Scratch-Resistant Surface",
+      "scratchResistantDesc": "Durable surface for long-lasting use",
+      "softClose": "Automatic Soft-Close Option",
+      "softCloseDesc": "Quiet and smooth closing"
+    },
+    "materials": {
+      "title": "Material Showcase"
+    }
   }
 }

@@ -70,43 +70,6 @@ export default function Catalog() {
 
   return (
     <div>
-      {/* Category Tabs */}
-      <div className="bg-white/90 backdrop-blur border rounded-xl mb-5">
-        <div className="grid grid-cols-4 text-center">
-          {CATS.map((c) => (
-            <button
-              key={c.key}
-              onClick={() => setParams({ cat: c.key })}
-              className={`py-3 relative font-semibold transition-colors ${
-                cat === c.key
-                  ? 'text-slate-900 bg-slate-50'
-                  : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'
-              }`}
-            >
-              {typeof c.icon === 'string' ? (
-                c.icon.endsWith('.png') ||
-                c.icon.endsWith('.jpg') ||
-                c.icon.endsWith('.svg') ? (
-                  <img
-                    src={c.icon}
-                    alt={c.label}
-                    className="w-5 h-5 mb-1 mx-auto object-contain"
-                  />
-                ) : (
-                  <i className={`${c.icon} text-xl mb-1 block mx-auto`}></i>
-                )
-              ) : (
-                <c.icon className="text-xl mb-1 block mx-auto" />
-              )}
-              <div className="text-xs font-medium">{c.label}</div>
-              {cat === c.key && (
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-red-600 rounded-t"></div>
-              )}
-            </button>
-          ))}
-        </div>
-      </div>
-
       {cat === 'contact' ? (
         /* Contact Section */
         <div className="bg-white rounded-2xl border shadow-sm p-8">
@@ -170,18 +133,6 @@ export default function Catalog() {
         </div>
       ) : (
         <>
-          <div className="flex items-center gap-3 mb-5">
-            <div className="relative w-full md:w-80">
-              <MdSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
-              <input
-                value={q}
-                onChange={(e) => setQ(e.target.value)}
-                placeholder={t('catalog.search')}
-                className="w-full pl-10 pr-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-              />
-            </div>
-          </div>
-
           {filtered.length === 0 ? (
             <div className="text-slate-600">{t('catalog.noProducts')}</div>
           ) : (
