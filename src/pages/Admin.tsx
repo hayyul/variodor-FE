@@ -90,7 +90,6 @@ export default function Admin() {
   const img = useStore((state) => state.img);
   const filter = useStore((state) => state.filter);
   const q = useStore((state) => state.q);
-
   const setIsAuthenticated = useStore((state) => state.setIsAuthenticated);
   const setToken = useStore((state) => state.setToken);
   const setItems = useStore((state) => state.setItems);
@@ -99,7 +98,6 @@ export default function Admin() {
   const setSpecVal = useStore((state) => state.setSpecVal);
   const setImg = useStore((state) => state.setImg);
   const setFilter = useStore((state) => state.setFilter);
-  const setQ = useStore((state) => state.setQ);
   const resetForm = useStore((state) => state.resetForm);
 
   // Helper function to make authenticated API calls
@@ -415,7 +413,7 @@ export default function Admin() {
                 </button>
               </div>
               <div className="grid grid-cols-2 gap-2">
-                {Object.entries(form.specs || {}).map(([k, v]) => (
+                {Object.entries(form.specs || {}).map(([k, v]: [string, string]) => (
                   <div key={k} className="text-sm">
                     <span className="text-slate-500">{k}:</span> {v}
                   </div>
@@ -473,7 +471,7 @@ export default function Admin() {
               </div>
 
               <div className="flex gap-2 flex-wrap">
-                {(form.images || []).map((u, i) => (
+                {(form.images || []).map((u: string, i: number) => (
                   <div key={i} className="relative">
                     <img src={u} className="h-16 w-20 object-cover rounded" />
                     <button

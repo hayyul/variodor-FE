@@ -2,11 +2,9 @@ import React, { useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
-  MdSearch,
   MdPhone,
   MdEmail,
   MdLocationOn,
-  MdContactMail,
 } from 'react-icons/md';
 import { useStore } from '../store';
 import { getApiUrl } from '../config/api';
@@ -18,44 +16,47 @@ const mkd = (n: number) =>
     maximumFractionDigits: 2,
   }).format(n);
 
-const getCats = (t: any) => [
-  {
-    key: 'interior',
-    label: t('catalog.categories.interior'),
-    icon: 'fa-solid fa-door-closed',
-  },
-  {
-    key: 'exterior',
-    label: t('catalog.categories.exterior'),
-    icon: 'fas fa-door-open',
-  },
-  {
-    key: 'windows',
-    label: t('catalog.categories.windows'),
-    icon: '/logos/window.png',
-  },
-  {
-    key: 'contact',
-    label: t('catalog.categories.contact'),
-    icon: MdContactMail,
-  },
-];
-
 export default function Catalog() {
   const { t } = useTranslation();
   const products = useStore((state) => state.products);
   const q = useStore((state) => state.q);
   const setProducts = useStore((state) => state.setProducts);
-  const setQ = useStore((state) => state.setQ);
+  const cacheProducts = useStore((state) => state.cacheProducts);
+  const getCachedProducts = useStore((state) => state.getCachedProducts);
+  const [isLoading, setIsLoading] = React.useState(false);
 
-  const [params, setParams] = useSearchParams();
+  const [params] = useSearchParams();
   const cat = params.get('cat') || 'interior';
-  const CATS = getCats(t);
 
-  const load = () =>
-    fetch(getApiUrl(`/api/products?category=${cat}`))
-      .then((r) => r.json())
-      .then(setProducts);
+  const load = async () => {
+    // Check cache first
+    const cached = getCachedProducts(cat);
+    if (cached && cached.length > 0) {
+      setProducts(cached);
+      return;
+    }
+
+    // If not in cache, fetch from API
+    setIsLoading(true);
+    try {
+      const response = await fetch(getApiUrl(`/api/products?category=${cat}`));
+      const data = await response.json();
+      setProducts(data);
+      cacheProducts(cat, data);
+
+      // Preload images in background
+      data.forEach((product: any) => {
+        if (product.images && product.images.length > 0) {
+          const img = new Image();
+          img.src = product.images[0];
+        }
+      });
+    } catch (error) {
+      console.error('Failed to load products:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   React.useEffect(() => {
     if (cat !== 'contact') {
@@ -133,7 +134,14 @@ export default function Catalog() {
         </div>
       ) : (
         <>
-          {filtered.length === 0 ? (
+          {isLoading ? (
+            <div className="flex justify-center items-center py-20">
+              <div className="text-center">
+                <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mb-4"></div>
+                <p className="text-slate-600">Се вчитува...</p>
+              </div>
+            </div>
+          ) : filtered.length === 0 ? (
             <div className="text-slate-600">{t('catalog.noProducts')}</div>
           ) : (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -147,6 +155,7 @@ export default function Catalog() {
                     <img
                       src={p.images[0]}
                       alt={p.name}
+                      loading="lazy"
                       className="max-w-full max-h-full object-contain"
                     />
                   </div>

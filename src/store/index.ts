@@ -28,8 +28,11 @@ interface AdminState {
 interface CatalogState {
   products: Product[];
   q: string;
+  productsCache: Record<string, Product[]>;
   setProducts: (products: Product[]) => void;
   setQ: (q: string) => void;
+  cacheProducts: (category: string, products: Product[]) => void;
+  getCachedProducts: (category: string) => Product[] | undefined;
 }
 
 // Product State Types
@@ -79,8 +82,8 @@ const emptyForm: ProductForm = {
 };
 
 export const useStore = create<Store>()(
-  persist(
-    (set) => ({
+  persist<Store>(
+    (set, get) => ({
       // Admin State
       isAuthenticated: false,
       token: null,
@@ -104,7 +107,15 @@ export const useStore = create<Store>()(
 
       // Catalog State
       products: [],
+      productsCache: {},
       setProducts: (products: Product[]) => set({ products }),
+      cacheProducts: (category: string, products: Product[]) =>
+        set((state) => ({
+          productsCache: { ...state.productsCache, [category]: products },
+        })),
+      getCachedProducts: (category: string): Product[] | undefined => {
+        return get().productsCache[category];
+      },
 
       // Product State
       currentProduct: null,
@@ -116,11 +127,6 @@ export const useStore = create<Store>()(
     }),
     {
       name: 'variador-store',
-      partialize: (state) => ({
-        token: state.token,
-        isAuthenticated: state.isAuthenticated,
-        language: state.language,
-      }),
     }
   )
 );
