@@ -5,6 +5,8 @@ import { getApiUrl } from '../config/api';
 export const usePrefetch = () => {
   const cacheProducts = useStore((state) => state.cacheProducts);
   const getCachedProducts = useStore((state) => state.getCachedProducts);
+  const cacheProductDetails = useStore((state) => state.cacheProductDetails);
+  const getCachedProductDetails = useStore((state) => state.getCachedProductDetails);
 
   useEffect(() => {
     const prefetchAll = async () => {
@@ -21,8 +23,14 @@ export const usePrefetch = () => {
           const data = await response.json();
           cacheProducts(category, data);
 
-          // Preload all product images
+          // Preload all product images and cache product details
           data.forEach((product: any) => {
+            // Cache individual product details
+            if (product.id && !getCachedProductDetails(product.id)) {
+              cacheProductDetails(product.id, product);
+            }
+
+            // Preload images
             if (product.images && product.images.length > 0) {
               product.images.forEach((imgUrl: string) => {
                 const img = new Image();

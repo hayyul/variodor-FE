@@ -17,12 +17,37 @@ export default function Product() {
   const nav = useNavigate();
   const currentProduct = useStore((state) => state.currentProduct);
   const setCurrentProduct = useStore((state) => state.setCurrentProduct);
+  const cacheProductDetails = useStore((state) => state.cacheProductDetails);
+  const getCachedProductDetails = useStore((state) => state.getCachedProductDetails);
 
   useEffect(() => {
+    if (!id) return;
+
+    // Check cache first
+    const cached = getCachedProductDetails(id);
+    if (cached) {
+      setCurrentProduct(cached);
+      // Preload all product images
+      cached.images?.forEach((imgUrl) => {
+        const img = new Image();
+        img.src = imgUrl;
+      });
+      return;
+    }
+
+    // Fetch from API if not cached
     fetch(getApiUrl('/api/products/' + id))
       .then((r) => r.json())
-      .then(setCurrentProduct);
-  }, [id, setCurrentProduct]);
+      .then((product) => {
+        setCurrentProduct(product);
+        cacheProductDetails(id, product);
+        // Preload all product images
+        product.images?.forEach((imgUrl: string) => {
+          const img = new Image();
+          img.src = imgUrl;
+        });
+      });
+  }, [id]);
 
   if (!currentProduct) return <div>...</div>;
 
@@ -38,6 +63,7 @@ export default function Product() {
         <img
           src={currentProduct.images[0]}
           alt={currentProduct.name}
+          loading="eager"
           className="w-full h-[520px] object-contain bg-slate-50 rounded-2xl"
         />
 

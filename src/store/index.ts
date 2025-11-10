@@ -38,7 +38,10 @@ interface CatalogState {
 // Product State Types
 interface ProductState {
   currentProduct: Product | null;
+  productDetailsCache: Record<string, Product>;
   setCurrentProduct: (product: Product | null) => void;
+  cacheProductDetails: (id: string, product: Product) => void;
+  getCachedProductDetails: (id: string) => Product | undefined;
 }
 
 // Language State Types
@@ -119,7 +122,15 @@ export const useStore = create<Store>()(
 
       // Product State
       currentProduct: null,
+      productDetailsCache: {},
       setCurrentProduct: (currentProduct: Product | null) => set({ currentProduct }),
+      cacheProductDetails: (id: string, product: Product) =>
+        set((state) => ({
+          productDetailsCache: { ...state.productDetailsCache, [id]: product },
+        })),
+      getCachedProductDetails: (id: string): Product | undefined => {
+        return get().productDetailsCache[id];
+      },
 
       // Language State
       language: 'mk',
@@ -127,6 +138,12 @@ export const useStore = create<Store>()(
     }),
     {
       name: 'variador-store',
+      // Only persist authentication and language, not the cache data
+      partialize: (state) => ({
+        token: state.token,
+        isAuthenticated: state.isAuthenticated,
+        language: state.language,
+      }),
     }
   )
 );
