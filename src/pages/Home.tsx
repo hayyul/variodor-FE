@@ -36,6 +36,14 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
+  // Preload all hero images
+  React.useEffect(() => {
+    heroSlides.forEach((slide) => {
+      const img = new Image();
+      img.src = slide.image;
+    });
+  }, []);
+
   const handleSlideClick = (index: any) => {
     setCurrentSlide(index);
   };

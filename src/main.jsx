@@ -10,6 +10,7 @@ import Catalog from './pages/Catalog.tsx';
 import Product from './pages/Product.tsx';
 import Admin from './pages/Admin.tsx';
 import LanguageSelector from './components/LanguageSelector.tsx';
+import { usePrefetch } from './hooks/usePrefetch.ts';
 
 function Layout() {
   const { t } = useTranslation();
@@ -22,6 +23,9 @@ function Layout() {
   const isCatalogPage = location.pathname === '/catalog';
   const showCategoryNav = (isHomePage || (isCatalogPage && cat !== 'contact'));
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+
+  // Global prefetching
+  usePrefetch();
 
   React.useEffect(() => {
     const handleScroll = () => {

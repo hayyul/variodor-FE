@@ -33,6 +33,13 @@ export default function Catalog() {
     const cached = getCachedProducts(cat);
     if (cached && cached.length > 0) {
       setProducts(cached);
+      // Preload images for cached products to ensure they're ready
+      cached.forEach((product) => {
+        if (product.images && product.images.length > 0) {
+          const img = new Image();
+          img.src = product.images[0];
+        }
+      });
       return;
     }
 
