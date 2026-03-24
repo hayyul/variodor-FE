@@ -13,7 +13,7 @@ const mkd = (n: number) =>
   new Intl.NumberFormat('mk-MK', {
     style: 'currency',
     currency: 'MKD',
-    maximumFractionDigits: 2,
+    maximumFractionDigits: 0,
   }).format(n);
 
 export default function Catalog() {

@@ -8,7 +8,7 @@ const mkd = (n: number) =>
   new Intl.NumberFormat('mk-MK', {
     style: 'currency',
     currency: 'MKD',
-    maximumFractionDigits: 2,
+    maximumFractionDigits: 0,
   }).format(n);
 
 export default function Product() {
@@ -18,7 +18,9 @@ export default function Product() {
   const currentProduct = useStore((state) => state.currentProduct);
   const setCurrentProduct = useStore((state) => state.setCurrentProduct);
   const cacheProductDetails = useStore((state) => state.cacheProductDetails);
-  const getCachedProductDetails = useStore((state) => state.getCachedProductDetails);
+  const getCachedProductDetails = useStore(
+    (state) => state.getCachedProductDetails,
+  );
 
   useEffect(() => {
     if (!id) return;
@@ -91,9 +93,13 @@ export default function Product() {
               </h3>
               <ul className="space-y-3">
                 {Object.entries(currentProduct.specs || {}).map(([k, v]) => (
-                  <li key={k} className="flex gap-2">
-                    <span className="font-semibold">{k}:</span>
-                    <span className="text-slate-700">{v}</span>
+                  <li key={k} className="flex flex-wrap gap-x-2 gap-y-0.5">
+                    <span className="font-semibold whitespace-nowrap">
+                      {k}:
+                    </span>
+                    <span className="text-slate-700 break-words min-w-0">
+                      {v}
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -105,7 +111,7 @@ export default function Product() {
           <div className="flex gap-3">
             <a
               href={`https://wa.me/3890000000?text=${encodeURIComponent(
-                t('product.contact') + ': ' + currentProduct.name
+                t('product.contact') + ': ' + currentProduct.name,
               )}`}
               target="_blank"
               className="px-4 py-2 rounded bg-green-600 text-white"
