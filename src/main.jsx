@@ -28,6 +28,10 @@ function Layout() {
   usePrefetch();
 
   React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
+  React.useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
