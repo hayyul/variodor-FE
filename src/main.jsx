@@ -21,7 +21,7 @@ function Layout() {
   const cat = params.get('cat') || 'interior';
   const isHomePage = location.pathname === '/';
   const isCatalogPage = location.pathname === '/catalog';
-  const showCategoryNav = (isHomePage || (isCatalogPage && cat !== 'contact'));
+  const showCategoryNav = (isHomePage || isCatalogPage);
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
   // Global prefetching
@@ -43,6 +43,7 @@ function Layout() {
     { key: 'interior', label: t('catalog.categories.interior'), icon: 'fa-door-closed' },
     { key: 'exterior', label: t('catalog.categories.exterior'), icon: 'fa-door-open' },
     { key: 'windows', label: t('catalog.categories.windows'), icon: '/logos/window.png' },
+    { key: 'contact', label: t('catalog.categories.contact'), icon: 'fa-envelope' },
   ];
 
   const handleCategoryClick = (key) => {
