@@ -2,12 +2,12 @@
  * API Configuration
  *
  * Both development and production use the production backend
- * Default: https://variodor-be.onrender.com
+ * Default: https://variodoor-be.vercel.app
  * Override via VITE_API_URL environment variable
  */
 
 const API_URL =
-  import.meta.env.VITE_API_URL || 'https://variodor-be.onrender.com';
+  import.meta.env.VITE_API_URL || 'https://variodoor-be.vercel.app';
 
 /**
  * Get the full API endpoint URL
