@@ -5,11 +5,8 @@ import { useStore } from '../store';
 import { getApiUrl } from '../config/api';
 
 const mkd = (n: number) =>
-  new Intl.NumberFormat('mk-MK', {
-    style: 'currency',
-    currency: 'MKD',
-    maximumFractionDigits: 0,
-  }).format(n);
+  new Intl.NumberFormat('mk-MK', { maximumFractionDigits: 0 }).format(n) +
+  ' ден';
 
 export default function Product() {
   const { t } = useTranslation();
