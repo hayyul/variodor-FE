@@ -173,7 +173,7 @@ export default function Catalog() {
                     <div className="mt-2 text-slate-700 font-semibold">
                       {p.price_mkd === 0
                         ? t('product.priceOnRequest')
-                        : `${mkd(p.price_mkd)} ${t('product.currency')}`}
+                        : mkd(p.price_mkd)}
                     </div>
                   </div>
                 </Link>
