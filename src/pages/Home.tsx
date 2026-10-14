@@ -14,7 +14,8 @@ export default function Home() {
 
   const heroSlides = [
     {
-      image: 'https://app.yildiz.com/products_render/LUXURY_Modernantrasit.jpg',
+      image:
+        'https://app.yildiz.com/products_render/R_VDA_MONO_SOHO_NATUREL_GRI.jpg',
       category: 'interior',
     },
     {
@@ -55,7 +56,8 @@ export default function Home() {
       category: 'interior',
       gradient: 'from-amber-700 to-amber-900',
       icon: 'fa-door-closed',
-      image: 'https://app.yildiz.com/products_render/LUXURY_Modernantrasit.jpg',
+      image:
+        'https://app.yildiz.com/products_render/R_VDA_MONO_SOHO_NATUREL_GRI.jpg',
     },
     {
       title: t('catalog.categories.exterior'),
